@@ -1,9 +1,9 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 
-function BaseList() {
+function App() {
 
-const [amiibos, setAmiibos] = useState([])
+  const [amiibos, setAmiibos] = useState([])
 
   useEffect(() => {
     async function getAmiibos() {
@@ -14,26 +14,18 @@ const [amiibos, setAmiibos] = useState([])
 
       console.log(data.amiibo)
 
-      const list = amiibos.map((figure) => {
-        <li>{figure.name}</li>
-      })
-
-      return (
-        <>
-          <ul>{list}</ul>
-        </>
-      )
     }
     getAmiibos()
   }, [])
-}
 
-function App() {
+  const list = amiibos.map((figure) => (
+    <li>{figure.name}</li>
+  ))
 
   return (
     <>
     <h1>Amiibo!</h1>
-    <BaseList />
+    <ul>{list}</ul>
     </>
   )
 }
