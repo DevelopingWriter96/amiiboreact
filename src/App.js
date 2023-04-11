@@ -19,7 +19,7 @@ function App() {
   }, [])
 
   const list = amiibos.map((figure) => (
-    <li>{figure.name}</li>
+    <li key={figure.tail}><img src={figure.image} class="icon"/>{figure.name}</li>
   ))
 
   return (
