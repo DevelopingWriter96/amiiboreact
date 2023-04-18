@@ -177,11 +177,23 @@ function App() {
   }
 
   function sort() {
-    console.log(favorites)
+    const amiiboWithIds = favorites.map((item, index) => {
+      return {id: index, ...item}
+    })
+
+    setAmiibos(amiiboWithIds)
+
+    console.log(amiiboWithIds)
   }
 
   function sortWanted() {
-    console.log(wanted)
+    const amiiboWithIds = wanted.map((item, index) => {
+      return {id: index, ...item}
+    })
+
+    setAmiibos(amiiboWithIds)
+
+    console.log(amiiboWithIds)
   }
 
   const ds = games3ds.map((game, index) => (
