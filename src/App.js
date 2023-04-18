@@ -32,7 +32,7 @@ function App() {
   }, [])
 
   //Amiibo Details Retrieval
-  async function details(name, series, type) {
+  async function details(name, series, type, selectid) {
     if (name === "Banjo & Kazooie") {
       const res = await fetch('https://www.amiiboapi.com/api/amiibo/?character=Banjo&showgames&showusage')
       const data = await res.json()
@@ -144,7 +144,9 @@ function App() {
       
       console.log(data.amiibo[0])
 
-      setSelected(data.amiibo[0])
+      console.log({id: selectid, ...data.amiibo[0]})
+
+      setSelected({id: selectid, ...data.amiibo[0]})
 
       setDate(data.amiibo[0].release.na)
 
@@ -153,26 +155,28 @@ function App() {
       setGamesWiiu(data.amiibo[0].gamesWiiU)
 
       setGamesSwitch(data.amiibo[0].gamesSwitch)
+
+      console.log(selectid);
     }
   }
 
-  function addFavorite(amiibo) {
-    if (favorites.find(favoriteAmiibo => favoriteAmiibo.id === amiibo.id)){
-      setFavorites(favorites.filter(favoriteAmiibo => favoriteAmiibo.id !== amiibo.id))
-      console.log(`${amiibo.name} removed from favorites`)
+  function addFavorite(selectamiibo) {
+    if (favorites.find(favoriteAmiibo => favoriteAmiibo.id === selectamiibo.id)){
+      setFavorites(favorites.filter(favoriteAmiibo => favoriteAmiibo.id !== selectamiibo.id))
+      console.log(`${selectamiibo.name} removed from favorites`)
     }else{
-      setFavorites([...favorites, {amiibo}])
-      console.log(`${amiibo.name} added to Favorites`)
+      setFavorites([...favorites, selectamiibo])
+      console.log(`${selectamiibo.name} added to Favorites`)
     }
   }
 
-  function addWanted(amiibo) {
-    if (wanted.find(wantedAmiibo => wantedAmiibo.id === amiibo.id)){
-      setWanted(wanted.filter(wantedAmiibo => wantedAmiibo.id !== amiibo.id))
-      console.log(`${amiibo.name} removed from Wanted`)
+  function addWanted(selectamiibo) {
+    if (wanted.find(wantedAmiibo => wantedAmiibo.id === selectamiibo.id)){
+      setWanted(wanted.filter(wantedAmiibo => wantedAmiibo.id !== selectamiibo.id))
+      console.log(`${selectamiibo.name} removed from Wanted`)
     }else{
-      setWanted([...wanted, {amiibo}])
-      console.log(`${amiibo.name} added to Wanted`)
+      setWanted([...wanted, selectamiibo])
+      console.log(`${selectamiibo.name} added to Wanted`)
     }
   }
 
@@ -209,7 +213,7 @@ function App() {
   ))
 
   const list = amiibos.map((figure, index) => (
-    <li key={index} onClick={() => details(figure.name, figure.amiiboSeries, figure.type)} ><img src={figure.image} className="icon" alt={figure.name}/>{figure.name}</li>
+    <li key={index} onClick={() => details(figure.name, figure.amiiboSeries, figure.type, figure.id)} ><img src={figure.image} className="icon" alt={figure.name}/>{figure.name}</li>
   ))
 
   return (
