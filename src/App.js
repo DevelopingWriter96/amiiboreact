@@ -190,6 +190,20 @@ function App() {
     }
   }
 
+  async function gameSort(value) {
+    const res = await fetch(`https://www.amiiboapi.com/api/amiibo/?gameseries=${value}&showgames&showusage`)
+      const data = await res.json()
+
+      //set id
+      const amiiboWithIds = data.amiibo.map((item, index) => {
+        return {id: index, owned: false, wanted: false, favorite: false, ...item}
+      })
+
+      setAmiibos(amiiboWithIds)
+
+      console.log(amiiboWithIds)
+  }
+
   async function view(value) {
     if(value==="favorites"){
     const amiiboWithIds = favorites.map((item, index) => {
@@ -276,49 +290,49 @@ function App() {
       <option value="owned">Owned</option>
     </select>
     <label for="game" id="game">Game Series: </label>
-    <select name="game" id="game">
-    <option>All</option>
-    <option>Super Mario</option>
-    <option>Yoshi's Woolly World</option>
-    <option>Donkey Kong</option>
-    <option>The Legend of Zelda</option>
-    <option>Breath of the Wild</option>
-    <option>Animal Crossing</option>
-    <option>Star Fox</option>
-    <option>Metroid</option>
-    <option>F-Zero</option>
-    <option>Pikmin</option>
-    <option>Punch Out</option>
-    <option>Wii Fit</option>
-    <option>Kid Icarus</option>
-    <option>Classic Nintendo</option>
-    <option>Mii</option>
-    <option>Splatoon</option>
-    <option>Mario Sports Superstars</option>
-    <option>ARMS</option>
-    <option>Pokemon</option>
-    <option>Kirby</option>
-    <option>BoxBoy!</option>
-    <option>Fire Emblem</option>
-    <option>Zenoblade</option>
-    <option>Chibi Robo</option>
-    <option>Sonic</option>
-    <option>Pac-man</option>
-    <option>Dark Souls</option>
-    <option>Tekken</option>
-    <option>Megaman</option>
-    <option>Street Fighter</option>
-    <option>Monster Hunter</option>
-    <option>Kellogs</option>
-    <option>Metal Gear Solid</option>
-    <option>Castlevania</option>
-    <option>Power Pros</option>
-    <option>Yu-Gi-Oh!</option>
-    <option>Diablo</option>
-    <option>Persona</option>
-    <option>Banjo Kazooie</option>
-    <option>Fatal Fury</option>
-    <option>Minecraft</option>
+    <select name="game" id="game" onChange={e => gameSort(e.target.value)}>
+    <option value="all">All</option>
+    <option value="Super Mario">Super Mario</option>
+    <option value="Yoshi's Woolly World">Yoshi's Woolly World</option>
+    <option value="Donkey Kong">Donkey Kong</option>
+    <option value="The Legend of Zelda">The Legend of Zelda</option>
+    <option value="Breath of the Wild">Breath of the Wild</option>
+    <option value="Animal Crossing">Animal Crossing</option>
+    <option value="Star Fox">Star Fox</option>
+    <option value="Metroid">Metroid</option>
+    <option value="F-Zero">F-Zero</option>
+    <option value="Pikmin">Pikmin</option>
+    <option value="Punch Out">Punch Out</option>
+    <option value="Wii Fit">Wii Fit</option>
+    <option value="Kid Icarus">Kid Icarus</option>
+    <option value="Classic Nintendo">Classic Nintendo</option>
+    <option value="Mii">Mii</option>
+    <option value="Splatoon">Splatoon</option>
+    <option value="Mario Sports Superstars">Mario Sports Superstars</option>
+    <option value="ARMS">ARMS</option>
+    <option value="Pokemon">Pokemon</option>
+    <option value="Kirby">Kirby</option>
+    <option value="BoxBoy!">BoxBoy!</option>
+    <option value="Fire Emblem">Fire Emblem</option>
+    <option value="Zenoblade">Zenoblade</option>
+    <option value="Chibi Robo">Chibi Robo</option>
+    <option value="Sonic">Sonic</option>
+    <option value="Pac-man">Pac-man</option>
+    <option value="Dark Souls">Dark Souls</option>
+    <option value="Tekken">Tekken</option>
+    <option value="Megaman">Megaman</option>
+    <option value="Street Fighter">Street Fighter</option>
+    <option value="Monster Hunter">Monster Hunter</option>
+    <option value="Kellogs">Kellogs</option>
+    <option value="Metal Gear Solid">Metal Gear Solid</option>
+    <option value="Castlevania">Castlevania</option>
+    <option value="Power Pros">Power Pros</option>
+    <option value="Yu-Gi-Oh!">Yu-Gi-Oh!</option>
+    <option value="Diablo">Diablo</option>
+    <option value="Persona">Persona</option>
+    <option value="Banjo Kazooie">Banjo Kazooie</option>
+    <option value="Fatal Fury">Fatal Fury</option>
+    <option value="Minecraft">Minecraft</option>
     </select>
     <label for="series" id="series">Amiibo Series: </label>
     <select name="series" id="series">
