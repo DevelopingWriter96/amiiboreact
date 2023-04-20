@@ -11,7 +11,7 @@ function App() {
   const [date, setDate] = useState("")
   const [favorites, setFavorites] = useState([])
   const [wanted, setWanted] = useState([])
-  // const [owned, setOwned] = useState([])
+  const [owned, setOwned] = useState([])
 
   //Amiibo List Retrieval
   useEffect(() => {
@@ -21,7 +21,7 @@ function App() {
 
       //set id
       const amiiboWithIds = data.amiibo.map((item, index) => {
-        return {id: index, ...item}
+        return {id: index, owned: false, wanted: false, favorite: false, ...item}
       })
 
       setAmiibos(amiiboWithIds)
@@ -180,10 +180,20 @@ function App() {
     }
   }
 
+  function addOwned(selectamiibo) {
+    if (owned.find(wantedAmiibo => wantedAmiibo.id === selectamiibo.id)){
+      setOwned(owned.filter(wantedAmiibo => wantedAmiibo.id !== selectamiibo.id))
+      console.log(`${selectamiibo.name} removed from Owned`)
+    }else{
+      setOwned([...owned, selectamiibo])
+      console.log(`${selectamiibo.name} added to Owned`)
+    }
+  }
+
   async function view(value) {
     if(value==="favorites"){
     const amiiboWithIds = favorites.map((item, index) => {
-      return {id: index, ...item}
+      return {id: index, owned: false, wanted: false, favorite: false, ...item}
     })
     
     setAmiibos(amiiboWithIds)
@@ -191,7 +201,15 @@ function App() {
     console.log(amiiboWithIds)
   } else if(value==="wanted"){
     const amiiboWithIds = wanted.map((item, index) => {
-      return {id: index, ...item}
+      return {id: index, owned: false, wanted: false, favorite: false, ...item}
+    })
+
+    setAmiibos(amiiboWithIds)
+
+    console.log(amiiboWithIds)
+  } else if(value==="owned") {
+    const amiiboWithIds = owned.map((item, index) => {
+      return {id: index, owned: false, wanted: false, favorite: false, ...item}
     })
 
     setAmiibos(amiiboWithIds)
@@ -203,7 +221,7 @@ function App() {
 
       //set id
       const amiiboWithIds = data.amiibo.map((item, index) => {
-        return {id: index, ...item}
+        return {id: index, owned: false, wanted: false, favorite: false, ...item}
       })
 
       setAmiibos(amiiboWithIds)
@@ -249,15 +267,17 @@ function App() {
     <div className="controls">
     <button onClick={() => addFavorite(selected)}>Toggle Favorite</button>
     <button onClick={() => addWanted(selected)}>Toggle Wanted</button>
+    <button onClick={() => addOwned(selected)}>Toggle Owned</button>
     <label for="view">View: </label>
     <select name="view" id="view" onChange={e => view(e.target.value)}>
       <option value="normal">Normal</option>
       <option value="wanted">Wanted</option>
       <option value="favorites">Favorites</option>
+      <option value="owned">Owned</option>
     </select>
     <label for="game" id="game">Game Series: </label>
     <select name="game" id="game">
-    <option>Select a Franchise</option>
+    <option>All</option>
     <option>Super Mario</option>
     <option>Yoshi's Woolly World</option>
     <option>Donkey Kong</option>
@@ -299,6 +319,33 @@ function App() {
     <option>Banjo Kazooie</option>
     <option>Fatal Fury</option>
     <option>Minecraft</option>
+    </select>
+    <label for="series" id="series">Amiibo Series: </label>
+    <select name="series" id="series">
+    <option>Super Smash Bros.</option>
+    <option>Super Mario Bros.</option>
+    <option>Chibi-Robo!</option>
+    <option>Yoshi's Wooly World</option>
+    <option>Splatoon</option>
+    <option>Animal Crossing</option>
+    <option>8-bit Mario</option>
+    <option>Skylanders</option>
+    <option>Legend of Zelda</option>
+    <option>Shovel Knight</option>
+    <option>Kirby</option>
+    <option>Pokemon</option>
+    <option>Mario Sports Superstars</option>
+    <option>Monster Hunter</option>
+    <option>BoxBoy!</option>
+    <option>Pikmin</option>
+    <option>Fire Emblem</option>
+    <option>Metroid</option>
+    <option>Mega Man</option>
+    <option>Diablo</option>
+    <option>Power Pros</option>
+    <option>Monster Hunter Rise</option>
+    <option>Yu-Gi-Oh!</option>
+    <option>Super Nintendo World</option>
     </select>
     </div>
     <div className="list">
