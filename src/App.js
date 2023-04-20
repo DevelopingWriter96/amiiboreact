@@ -191,6 +191,19 @@ function App() {
   }
 
   async function gameSort(value) {
+    if (value==="all") {
+      const res = await fetch('https://www.amiiboapi.com/api/amiibo/')
+      const data = await res.json()
+
+      //set id
+      const amiiboWithIds = data.amiibo.map((item, index) => {
+        return {id: index, owned: false, wanted: false, favorite: false, ...item}
+      })
+
+      setAmiibos(amiiboWithIds)
+
+      console.log(amiiboWithIds)
+    }else {
     const res = await fetch(`https://www.amiiboapi.com/api/amiibo/?gameseries=${value}&showgames&showusage`)
       const data = await res.json()
 
@@ -202,6 +215,7 @@ function App() {
       setAmiibos(amiiboWithIds)
 
       console.log(amiiboWithIds)
+    }
   }
 
   async function view(value) {
