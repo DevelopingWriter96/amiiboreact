@@ -180,17 +180,16 @@ function App() {
     }
   }
 
-  function sort() {
+  async function view(value) {
+    if(value==="favorites"){
     const amiiboWithIds = favorites.map((item, index) => {
       return {id: index, ...item}
     })
-
+    
     setAmiibos(amiiboWithIds)
 
     console.log(amiiboWithIds)
-  }
-
-  function sortWanted() {
+  } else if(value==="wanted"){
     const amiiboWithIds = wanted.map((item, index) => {
       return {id: index, ...item}
     })
@@ -198,6 +197,21 @@ function App() {
     setAmiibos(amiiboWithIds)
 
     console.log(amiiboWithIds)
+  } else if(value==="normal") {
+    const res = await fetch('https://www.amiiboapi.com/api/amiibo/')
+      const data = await res.json()
+
+      //set id
+      const amiiboWithIds = data.amiibo.map((item, index) => {
+        return {id: index, ...item}
+      })
+
+      setAmiibos(amiiboWithIds)
+
+      console.log(amiiboWithIds)
+  } else {
+    console.log("Error!")
+  }
   }
 
   const ds = games3ds.map((game, index) => (
@@ -234,9 +248,58 @@ function App() {
     </div>
     <div className="controls">
     <button onClick={() => addFavorite(selected)}>Toggle Favorite</button>
-    <button onClick={() => sort()}>Sort Favorites</button>
     <button onClick={() => addWanted(selected)}>Toggle Wanted</button>
-    <button onClick={() => sortWanted()}>Sort Wanted</button>
+    <label for="view">View: </label>
+    <select name="view" id="view" onChange={e => view(e.target.value)}>
+      <option value="normal">Normal</option>
+      <option value="wanted">Wanted</option>
+      <option value="favorites">Favorites</option>
+    </select>
+    <label for="game" id="game">Game Series: </label>
+    <select name="game" id="game">
+    <option>Select a Franchise</option>
+    <option>Super Mario</option>
+    <option>Yoshi's Woolly World</option>
+    <option>Donkey Kong</option>
+    <option>The Legend of Zelda</option>
+    <option>Breath of the Wild</option>
+    <option>Animal Crossing</option>
+    <option>Star Fox</option>
+    <option>Metroid</option>
+    <option>F-Zero</option>
+    <option>Pikmin</option>
+    <option>Punch Out</option>
+    <option>Wii Fit</option>
+    <option>Kid Icarus</option>
+    <option>Classic Nintendo</option>
+    <option>Mii</option>
+    <option>Splatoon</option>
+    <option>Mario Sports Superstars</option>
+    <option>ARMS</option>
+    <option>Pokemon</option>
+    <option>Kirby</option>
+    <option>BoxBoy!</option>
+    <option>Fire Emblem</option>
+    <option>Zenoblade</option>
+    <option>Chibi Robo</option>
+    <option>Sonic</option>
+    <option>Pac-man</option>
+    <option>Dark Souls</option>
+    <option>Tekken</option>
+    <option>Megaman</option>
+    <option>Street Fighter</option>
+    <option>Monster Hunter</option>
+    <option>Kellogs</option>
+    <option>Metal Gear Solid</option>
+    <option>Castlevania</option>
+    <option>Power Pros</option>
+    <option>Yu-Gi-Oh!</option>
+    <option>Diablo</option>
+    <option>Persona</option>
+    <option>Banjo Kazooie</option>
+    <option>Fatal Fury</option>
+    <option>Minecraft</option>
+    </select>
     </div>
     <div className="list">
     <ul>{list}</ul>
