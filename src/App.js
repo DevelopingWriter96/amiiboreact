@@ -218,6 +218,34 @@ function App() {
     }
   }
 
+  async function seriesSort(value) {
+    if (value==="all") {
+      const res = await fetch('https://www.amiiboapi.com/api/amiibo/')
+      const data = await res.json()
+
+      //set id
+      const amiiboWithIds = data.amiibo.map((item, index) => {
+        return {id: index, owned: false, wanted: false, favorite: false, ...item}
+      })
+
+      setAmiibos(amiiboWithIds)
+
+      console.log(amiiboWithIds)
+    }else {
+    const res = await fetch(`https://www.amiiboapi.com/api/amiibo/?amiiboSeries=${value}&showgames&showusage`)
+      const data = await res.json()
+
+      //set id
+      const amiiboWithIds = data.amiibo.map((item, index) => {
+        return {id: index, owned: false, wanted: false, favorite: false, ...item}
+      })
+
+      setAmiibos(amiiboWithIds)
+
+      console.log(amiiboWithIds)
+    }
+  }
+
   async function view(value) {
     if(value==="favorites"){
     const amiiboWithIds = favorites.map((item, index) => {
@@ -283,7 +311,7 @@ function App() {
     <img src={selected.image} alt="selected amiibo" className="selectedImage"/>
     <h2>{selected.name}</h2>
     <h3>Released in the US on {date} as part of the {selected.amiiboSeries} Amiibo Series</h3>
-    <h3>Character is from {selected.gameSeries}</h3>
+    <h3>This character is from {selected.gameSeries}</h3>
     <h3>Compatible Games:</h3>
     <h4>3DS</h4>
     <ul>{ds}</ul>
@@ -296,14 +324,14 @@ function App() {
     <button onClick={() => addFavorite(selected)}>Toggle Favorite</button>
     <button onClick={() => addWanted(selected)}>Toggle Wanted</button>
     <button onClick={() => addOwned(selected)}>Toggle Owned</button>
-    <label for="view">View: </label>
+    <label htmlFor="view">View: </label>
     <select name="view" id="view" onChange={e => view(e.target.value)}>
       <option value="normal">Normal</option>
       <option value="wanted">Wanted</option>
       <option value="favorites">Favorites</option>
       <option value="owned">Owned</option>
     </select>
-    <label for="game" id="game">Game Series: </label>
+    <label htmlFor="game" id="game">Game Series: </label>
     <select name="game" id="game" onChange={e => gameSort(e.target.value)}>
     <option value="all">All</option>
     <option value="Super Mario">Super Mario</option>
@@ -348,32 +376,33 @@ function App() {
     <option value="Fatal Fury">Fatal Fury</option>
     <option value="Minecraft">Minecraft</option>
     </select>
-    <label for="series" id="series">Amiibo Series: </label>
-    <select name="series" id="series">
-    <option>Super Smash Bros.</option>
-    <option>Super Mario Bros.</option>
-    <option>Chibi-Robo!</option>
-    <option>Yoshi's Wooly World</option>
-    <option>Splatoon</option>
-    <option>Animal Crossing</option>
-    <option>8-bit Mario</option>
-    <option>Skylanders</option>
-    <option>Legend of Zelda</option>
-    <option>Shovel Knight</option>
-    <option>Kirby</option>
-    <option>Pokemon</option>
-    <option>Mario Sports Superstars</option>
-    <option>Monster Hunter</option>
-    <option>BoxBoy!</option>
-    <option>Pikmin</option>
-    <option>Fire Emblem</option>
-    <option>Metroid</option>
-    <option>Mega Man</option>
-    <option>Diablo</option>
-    <option>Power Pros</option>
-    <option>Monster Hunter Rise</option>
-    <option>Yu-Gi-Oh!</option>
-    <option>Super Nintendo World</option>
+    <label htmlFor="series" id="series">Amiibo Series: </label>
+    <select name="series" id="series" onChange={e => seriesSort(e.target.value)}>
+    <option value="all">All</option> 
+    <option value="Super Smash Bros.">Super Smash Bros.</option>
+    <option value="Super Mario Bros.">Super Mario Bros.</option>
+    <option value="Chibi-Robo!">Chibi-Robo!</option>
+    <option value="Yoshi's Woolly World">Yoshi's Woolly World</option>
+    <option value="Splatoon">Splatoon</option>
+    <option value="Animal Crossing">Animal Crossing</option>
+    <option value="8-bit Mario">8-bit Mario</option>
+    <option value="Skylanders">Skylanders</option>
+    <option value="Legend of Zelda">Legend of Zelda</option>
+    <option value="Shovel Knight">Shovel Knight</option>
+    <option value="Kirby">Kirby</option>
+    <option value="Pokemon">Pokemon</option>
+    <option value="Mario Sports Superstars">Mario Sports Superstars</option>
+    <option value="Monster Hunter">Monster Hunter</option>
+    <option value="BoxBoy!">BoxBoy!</option>
+    <option value="Pikmin">Pikmin</option>
+    <option value="Fire Emblem">Fire Emblem</option>
+    <option value="Metroid">Metroid</option>
+    <option value="Mega Man">Mega Man</option>
+    <option value="Diablo">Diablo</option>
+    <option value="Power Pros">Power Pros</option>
+    <option value="Monster Hunter Rise">Monster Hunter Rise</option>
+    <option value="Yu-Gi-Oh!">Yu-Gi-Oh!</option>
+    <option value="Super Nintendo World">Super Nintendo World</option>
     </select>
     </div>
     <div className="list">
