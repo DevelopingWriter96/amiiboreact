@@ -281,7 +281,12 @@ function App() {
     setAmiibos(amiiboWithIds)
 
     console.log(amiiboWithIds)
-    setMessage("Your Collection")
+    if (wanted.length === 0) {
+      setMessage("Your Collection is 100% Complete, congradulations!")
+    } else {
+      let completion = ((owned.length/(wanted.length+owned.length))*100)
+      setMessage(`Your collection is ${completion}% complete`)
+    }
   } else if(value==="normal") {
     const res = await fetch('https://www.amiiboapi.com/api/amiibo/')
       const data = await res.json()
