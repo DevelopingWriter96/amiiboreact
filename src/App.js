@@ -12,6 +12,7 @@ function App() {
   const [favorites, setFavorites] = useState([])
   const [wanted, setWanted] = useState([])
   const [owned, setOwned] = useState([])
+  const [message, setMessage] = useState("So Many Amiibos!")
 
   //Amiibo List Retrieval
   useEffect(() => {
@@ -215,6 +216,8 @@ function App() {
       setAmiibos(amiiboWithIds)
 
       console.log(amiiboWithIds)
+
+      setMessage(`The Amiibos from the ${value} game series`)
     }
   }
 
@@ -231,6 +234,8 @@ function App() {
       setAmiibos(amiiboWithIds)
 
       console.log(amiiboWithIds)
+
+      setMessage("So Many Amiibos!")
     }else {
     const res = await fetch(`https://www.amiiboapi.com/api/amiibo/?amiiboSeries=${value}&showgames&showusage`)
       const data = await res.json()
@@ -243,6 +248,8 @@ function App() {
       setAmiibos(amiiboWithIds)
 
       console.log(amiiboWithIds)
+
+      setMessage(`The ${value} Amiibo series`)
     }
   }
 
@@ -255,6 +262,8 @@ function App() {
     setAmiibos(amiiboWithIds)
 
     console.log(amiiboWithIds)
+
+    setMessage("Because you can't pick just one!")
   } else if(value==="wanted"){
     const amiiboWithIds = wanted.map((item, index) => {
       return {id: index, owned: false, wanted: false, favorite: false, ...item}
@@ -263,6 +272,7 @@ function App() {
     setAmiibos(amiiboWithIds)
 
     console.log(amiiboWithIds)
+    setMessage("Wishlist")
   } else if(value==="owned") {
     const amiiboWithIds = owned.map((item, index) => {
       return {id: index, owned: false, wanted: false, favorite: false, ...item}
@@ -271,6 +281,7 @@ function App() {
     setAmiibos(amiiboWithIds)
 
     console.log(amiiboWithIds)
+    setMessage("Your Collection")
   } else if(value==="normal") {
     const res = await fetch('https://www.amiiboapi.com/api/amiibo/')
       const data = await res.json()
@@ -283,6 +294,7 @@ function App() {
       setAmiibos(amiiboWithIds)
 
       console.log(amiiboWithIds)
+     setMessage("So Many Amiibos!")
   } else {
     console.log("Error!")
   }
@@ -406,6 +418,7 @@ function App() {
     </select>
     </div>
     <div className="list">
+    <h3>{message}</h3>
     <ul>{list}</ul>
     </div>
     </>
