@@ -40,7 +40,9 @@ function App() {
 
       console.log(data.amiibo[0])
 
-      setSelected(data.amiibo[0])
+      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[0]})
+
+      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[0]})
 
       setDate(data.amiibo[0].release.na)
 
@@ -55,7 +57,9 @@ function App() {
 
       console.log(data.amiibo[0])
 
-      setSelected(data.amiibo[0])
+      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[0]})
+
+      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[0]})
 
       setDate(data.amiibo[0].release.na)
 
@@ -70,7 +74,9 @@ function App() {
 
       console.log(data.amiibo[4])
 
-      setSelected(data.amiibo[4])
+      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[4]})
+
+      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[4]})
 
       setDate(data.amiibo[4].release.na)
 
@@ -85,7 +91,9 @@ function App() {
 
       console.log(data.amiibo[1])
 
-      setSelected(data.amiibo[1])
+      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[1]})
+
+      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[1]})
 
       setDate(data.amiibo[1].release.na)
 
@@ -99,8 +107,10 @@ function App() {
       const data = await res.json()
 
       console.log(data.amiibo[22])
+
+      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[22]})
       
-      setSelected(data.amiibo[22])
+      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[22]})
 
       setDate(data.amiibo[21].release.na)
 
@@ -114,8 +124,10 @@ function App() {
       const data = await res.json()
 
       console.log(data.amiibo[21])
+
+      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[21]})
       
-      setSelected(data.amiibo[21])
+      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[21]})
 
       setDate(data.amiibo[21].release.na)
 
@@ -130,7 +142,9 @@ function App() {
 
       console.log(data.amiibo[590])
       
-      setSelected(data.amiibo[590])
+      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[590]})
+
+      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[590]})
 
       setDate(data.amiibo[590].release.na)
 
@@ -145,9 +159,9 @@ function App() {
       
       console.log(data.amiibo[0])
 
-      console.log({id: selectid, ...data.amiibo[0]})
+      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[0]})
 
-      setSelected({id: selectid, ...data.amiibo[0]})
+      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[0]})
 
       setDate(data.amiibo[0].release.na)
 
