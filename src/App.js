@@ -25,12 +25,13 @@ function App() {
 
       //set id from the index and adding the wanted, owned, and favorite properties
       const amiiboWithIds = data.amiibo.map((item, index) => {
-        return {id: index, owned: false, wanted: false, favorite: false, ...item}
+        return {id: index, ...item}
       })
 
       setAmiibos(amiiboWithIds)
 
       console.log(amiiboWithIds)
+      
     }
     getAmiibos()
   }, [])
@@ -45,9 +46,9 @@ function App() {
 
       console.log(data.amiibo[0])
 
-      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[0]})
+      console.log({id: 834, ...data.amiibo[0]})
 
-      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[0]})
+      setSelected({id: 834, ...data.amiibo[0]})
 
       setDate(data.amiibo[0].release.na)
 
@@ -62,9 +63,9 @@ function App() {
 
       console.log(data.amiibo[0])
 
-      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[0]})
+      console.log({id: 70, ...data.amiibo[0]})
 
-      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[0]})
+      setSelected({id: 70, ...data.amiibo[0]})
 
       setDate(data.amiibo[0].release.na)
 
@@ -79,9 +80,9 @@ function App() {
 
       console.log(data.amiibo[4])
 
-      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[4]})
+      console.log({id: 68, ...data.amiibo[4]})
 
-      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[4]})
+      setSelected({id: 68, ...data.amiibo[4]})
 
       setDate(data.amiibo[4].release.na)
 
@@ -96,9 +97,9 @@ function App() {
 
       console.log(data.amiibo[1])
 
-      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[1]})
+      console.log({id: 27, ...data.amiibo[1]})
 
-      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[1]})
+      setSelected({id: 27, ...data.amiibo[1]})
 
       setDate(data.amiibo[1].release.na)
 
@@ -113,9 +114,9 @@ function App() {
 
       console.log(data.amiibo[22])
 
-      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[22]})
+      console.log({id: 99, ...data.amiibo[22]})
       
-      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[22]})
+      setSelected({id: 99, ...data.amiibo[22]})
 
       setDate(data.amiibo[21].release.na)
 
@@ -130,9 +131,9 @@ function App() {
 
       console.log(data.amiibo[21])
 
-      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[21]})
+      console.log({id: 98, ...data.amiibo[21]})
       
-      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[21]})
+      setSelected({id: 98, ...data.amiibo[21]})
 
       setDate(data.amiibo[21].release.na)
 
@@ -147,9 +148,9 @@ function App() {
 
       console.log(data.amiibo[590])
       
-      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[590]})
+      console.log({id: 590, ...data.amiibo[590]})
 
-      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[590]})
+      setSelected({id: 590, ...data.amiibo[590]})
 
       setDate(data.amiibo[590].release.na)
 
@@ -164,9 +165,9 @@ function App() {
       
       console.log(data.amiibo[0])
 
-      console.log({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[0]})
+      console.log({id: selectid, ...data.amiibo[0]})
 
-      setSelected({id: selectid, owned: false, wanted: false, favorite: false, ...data.amiibo[0]})
+      setSelected({id: selectid, ...data.amiibo[0]})
 
       setDate(data.amiibo[0].release.na)
 
@@ -228,17 +229,13 @@ function App() {
 
       console.log(amiiboWithIds)
     }else {
-    const res = await fetch(`https://www.amiiboapi.com/api/amiibo/?gameseries=${value}&showgames&showusage`)
-      const data = await res.json()
-
-      //set id
-      const amiiboWithIds = data.amiibo.map((item, index) => {
-        return {id: index, owned: false, wanted: false, favorite: false, ...item}
+    const filteredAmiibos = amiibos.filter((amiibo) => {
+        return amiibo.gameSeries === value
       })
 
-      setAmiibos(amiiboWithIds)
+      setAmiibos(filteredAmiibos)
 
-      console.log(amiiboWithIds)
+      console.log(filteredAmiibos)
 
       setMessage(`The Amiibos from the ${value} game series`)
     }
@@ -261,17 +258,14 @@ function App() {
 
       setMessage("So Many Amiibos!")
     }else {
-    const res = await fetch(`https://www.amiiboapi.com/api/amiibo/?amiiboSeries=${value}&showgames&showusage`)
-      const data = await res.json()
 
-      //set id
-      const amiiboWithIds = data.amiibo.map((item, index) => {
-        return {id: index, owned: false, wanted: false, favorite: false, ...item}
+      const filteredAmiibos = amiibos.filter((amiibo) => {
+        return amiibo.amiiboSeries === value
       })
 
-      setAmiibos(amiiboWithIds)
+      setAmiibos(filteredAmiibos)
 
-      console.log(amiiboWithIds)
+      console.log(filteredAmiibos)
 
       setMessage(`The ${value} Amiibo series`)
     }
