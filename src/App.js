@@ -1,8 +1,10 @@
+//First, we import the things that are needed for the app to run
 import './App.css';
 import { useEffect, useState } from 'react';
 
+//Then we create the actual app
 function App() {
-
+  //This is what I nicknamed my "variable bank", it contains all the variables needed that function using useState
   const [amiibos, setAmiibos] = useState([])
   const [selected, setSelected] = useState([])
   const [games3ds, setGames3ds] = useState([])
@@ -14,13 +16,14 @@ function App() {
   const [owned, setOwned] = useState([])
   const [message, setMessage] = useState("So Many Amiibos!")
 
-  //Amiibo List Retrieval
+  //useEffect is used here so that the function will be first ran on page load
   useEffect(() => {
+  //The function get amiibos will get the entirety of the amiibos from the api and store them in the amiibos variable
     async function getAmiibos() {
       const res = await fetch('https://www.amiiboapi.com/api/amiibo/')
       const data = await res.json()
 
-      //set id
+      //set id from the index and adding the wanted, owned, and favorite properties
       const amiiboWithIds = data.amiibo.map((item, index) => {
         return {id: index, owned: false, wanted: false, favorite: false, ...item}
       })
@@ -34,7 +37,9 @@ function App() {
 
   //Amiibo Details Retrieval
   async function details(name, series, type, selectid) {
+    //This if statement is because 7 amiibos broke the process
     if (name === "Banjo & Kazooie") {
+      //The amiibo is fetched from the api and the data is retrieved and stored in variables
       const res = await fetch('https://www.amiiboapi.com/api/amiibo/?character=Banjo&showgames&showusage')
       const data = await res.json()
 
@@ -176,6 +181,7 @@ function App() {
   }
 
   function addFavorite(selectamiibo) {
+    // Function tests to see if the same id is in the Favorites list, if its not, it adds, if it is, it removes.
     if (favorites.find(favoriteAmiibo => favoriteAmiibo.id === selectamiibo.id)){
       setFavorites(favorites.filter(favoriteAmiibo => favoriteAmiibo.id !== selectamiibo.id))
       console.log(`${selectamiibo.name} removed from favorites`)
@@ -186,6 +192,7 @@ function App() {
   }
 
   function addWanted(selectamiibo) {
+    // Function tests to see if the same id is in the Wanted list, if its not, it adds, if it is, it removes.
     if (wanted.find(wantedAmiibo => wantedAmiibo.id === selectamiibo.id)){
       setWanted(wanted.filter(wantedAmiibo => wantedAmiibo.id !== selectamiibo.id))
       console.log(`${selectamiibo.name} removed from Wanted`)
@@ -196,6 +203,7 @@ function App() {
   }
 
   function addOwned(selectamiibo) {
+    // Function tests to see if the same id is in the Owned list, if its not, it adds, if it is, it removes.
     if (owned.find(wantedAmiibo => wantedAmiibo.id === selectamiibo.id)){
       setOwned(owned.filter(wantedAmiibo => wantedAmiibo.id !== selectamiibo.id))
       console.log(`${selectamiibo.name} removed from Owned`)
@@ -206,6 +214,7 @@ function App() {
   }
 
   async function gameSort(value) {
+    //This function tests what view is selected by getting the value of the game dropdown and then redefines the list
     if (value==="all") {
       const res = await fetch('https://www.amiiboapi.com/api/amiibo/')
       const data = await res.json()
@@ -236,6 +245,7 @@ function App() {
   }
 
   async function seriesSort(value) {
+    //This function tests what view is selected by getting the value of the series dropdown and then redefines the list
     if (value==="all") {
       const res = await fetch('https://www.amiiboapi.com/api/amiibo/')
       const data = await res.json()
@@ -268,6 +278,7 @@ function App() {
   }
 
   async function view(value) {
+    //This function tests what view is selected by getting the value of the view dropdown and then redefines the list
     if(value==="favorites"){
     const amiiboWithIds = favorites.map((item, index) => {
       return {id: index, owned: false, wanted: false, favorite: false, ...item}
@@ -293,7 +304,8 @@ function App() {
     })
 
     setAmiibos(amiiboWithIds)
-
+    
+    //This calculates the completion percent based on the completed and wanted lists
     console.log(amiiboWithIds)
     if (wanted.length === 0) {
       setMessage("Your Collection is 100% Complete, congradulations!")
@@ -319,22 +331,27 @@ function App() {
   }
   }
 
+  //Renders the 3DS game list and functionality
   const ds = games3ds.map((game, index) => (
     <li key={index}>{game.gameName}<ul>{game.amiiboUsage.map((game, index) => (<li key={index}>{game.Usage}</li>))}</ul></li>
   ))
 
+  //renders the wiiu game list and functionality
   const wiiu = gamesWiiu.map((game, index) => (
     <li key={index}>{game.gameName}<ul>{game.amiiboUsage.map((game, index) => (<li key={index}>{game.Usage}</li>))}</ul></li>
   ))
   
+  //renders the switch game list and functionality
   const ns = gamesSwitch.map((game, index) => (
     <li key={index}>{game.gameName}<ul>{game.amiiboUsage.map((game, index) => (<li key={index}>{game.Usage}</li>))}</ul></li>
   ))
 
+  //renders Amiibo list
   const list = amiibos.map((figure, index) => (
     <li key={index} onClick={() => details(figure.name, figure.amiiboSeries, figure.type, figure.id)} ><img src={figure.image} className="icon" alt={figure.name}/>{figure.name}</li>
   ))
 
+  //DOM Rendering
   return (
     <>
     <h1>Amiibo!</h1>
