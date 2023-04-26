@@ -209,8 +209,15 @@ function App() {
       setOwned(owned.filter(wantedAmiibo => wantedAmiibo.id !== selectamiibo.id))
       console.log(`${selectamiibo.name} removed from Owned`)
     }else{
+      // Tests if it is in the wanted listed and removes it if it's toggled to owned, as the ability to toggle it as obtained.
+      if (wanted.find(wantedAmmiibo => wantedAmmiibo.id !== selectamiibo.id)){
       setOwned([...owned, selectamiibo])
       console.log(`${selectamiibo.name} added to Owned`)
+      } else {
+      setOwned([...owned, selectamiibo])
+      setWanted(wanted.filter(wantedAmiibo => wantedAmiibo.id !== selectamiibo.id))
+      console.log(`${selectamiibo.name} obtained`)
+      }
     }
   }
 
@@ -222,7 +229,7 @@ function App() {
 
       //set id
       const amiiboWithIds = data.amiibo.map((item, index) => {
-        return {id: index, owned: false, wanted: false, favorite: false, ...item}
+        return {id: index, ...item}
       })
 
       setAmiibos(amiiboWithIds)
@@ -249,7 +256,7 @@ function App() {
 
       //set id
       const amiiboWithIds = data.amiibo.map((item, index) => {
-        return {id: index, owned: false, wanted: false, favorite: false, ...item}
+        return {id: index, ...item}
       })
 
       setAmiibos(amiiboWithIds)
@@ -275,7 +282,7 @@ function App() {
     //This function tests what view is selected by getting the value of the view dropdown and then redefines the list
     if(value==="favorites"){
     const amiiboWithIds = favorites.map((item, index) => {
-      return {id: index, owned: false, wanted: false, favorite: false, ...item}
+      return {id: index, ...item}
     })
     
     setAmiibos(amiiboWithIds)
@@ -285,7 +292,7 @@ function App() {
     setMessage("Because you can't pick just one!")
   } else if(value==="wanted"){
     const amiiboWithIds = wanted.map((item, index) => {
-      return {id: index, owned: false, wanted: false, favorite: false, ...item}
+      return {id: index, ...item}
     })
 
     setAmiibos(amiiboWithIds)
